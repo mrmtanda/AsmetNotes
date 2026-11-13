@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In &bull; AsmetNotes</title>
+  <!-- Google Fonts: Inter & Material Symbols Outlined (Matching Project Design) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    /* Clean, Expert Auth Layout using Project Design Tokens */
+    body.auth-view {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--color-bg);
+      color: var(--color-text-body);
+      font-family: var(--font-family);
+    }
+
+    .auth-top-nav {
+      height: var(--header-height);
+      padding: 0 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--color-border);
+      background-color: var(--color-surface);
+    }
+
+    .auth-nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .auth-nav-link:hover {
+      color: var(--color-primary);
+    }
+
+    .auth-center-stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .auth-box {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .auth-card-panel {
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      padding: 2.25rem 2rem;
+    }
+
+    .auth-card-header {
+      margin-bottom: 1.75rem;
+      text-align: left;
+    }
+
+    .auth-card-title {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--color-text-heading);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.35rem;
+    }
+
+    .auth-card-desc {
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+      line-height: 1.4;
+    }
+
+    /* Form Fields */
+    .auth-form-body {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .auth-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .auth-field-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .auth-label {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--color-text-heading);
+    }
+
+    .auth-link {
+      font-size: 0.75rem;
+      color: var(--color-primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .auth-link:hover {
+      text-decoration: underline;
+    }
+
+    .auth-input-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .auth-text-input {
+      width: 100%;
+      height: 42px;
+      padding: 0 0.85rem;
+      font-family: inherit;
+      font-size: 0.9375rem;
+      color: var(--color-text-heading);
+      background-color: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .auth-text-input:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+      background-color: var(--color-surface);
+    }
+
+    .auth-pw-toggle {
+      position: absolute;
+      right: 0.5rem;
+      background: none;
+      border: none;
+      color: var(--color-text-dim);
+      cursor: pointer;
+      padding: 0.25rem;
+      display: flex;
+      align-items: center;
+      transition: color 0.15s ease;
+    }
+
+    .auth-pw-toggle:hover {
+      color: var(--color-text-heading);
+    }
+
+    /* Full Width Primary Submit */
+    .auth-submit-btn {
+      width: 100%;
+      height: 42px;
+      margin-top: 0.5rem;
+      font-weight: 600;
+      font-size: 0.9375rem;
+      border-radius: var(--radius-sm);
+    }
+
+    /* Switch Mode Bottom Area */
+    .auth-toggle-area {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.8125rem;
+      color: var(--color-text-muted);
+    }
+
+    .auth-toggle-btn {
+      background: none;
+      border: none;
+      color: var(--color-primary);
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      padding: 0 0.2rem;
+    }
+
+    .auth-toggle-btn:hover {
+      text-decoration: underline;
+    }
+
+    /* Notification Alerts */
+    .auth-notice {
+      padding: 0.75rem 0.85rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8125rem;
+      line-height: 1.4;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .auth-notice--danger {
+      background-color: var(--color-danger-bg);
+      border: 1px solid var(--color-danger);
+      color: var(--color-danger);
+    }
+
+    .auth-notice--success {
+      background-color: rgba(22, 163, 74, 0.1);
+      border: 1px solid var(--color-success);
+      color: var(--color-success);
+    }
+
+    /* Active Session Card (if already logged in) */
+    .auth-session-box {
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+    }
+
+    .auth-session-avatar {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 1rem auto;
+      background-color: var(--color-primary-light);
+      color: var(--color-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .auth-session-email {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-text-heading);
+      margin: 0.25rem 0 1.5rem 0;
+    }
+
+    .auth-session-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .auth-session-actions .btn {
+      flex: 1;
+      height: 40px;
+    }
+  </style>
+</head>
+<body class="auth-view">
+
+  <!-- Top App Navigation -->
+  <header class="auth-top-nav">
+    <a href="index.html" class="auth-nav-link" title="Return to AsmetNotes">
+      <span class="material-symbols-outlined text-xs">arrow_back</span>
+      <span>Back to Notes</span>
+    </a>
+
+    <!-- Project Brand Title -->
+    <div class="brand">
+      <h1 class="brand-title"><span class="brand-asmet">Asmet</span><span class="brand-notes">Notes</span></h1>
+    </div>
+
+    <!-- Theme Toggle -->
+    <button id="theme-toggle-btn" class="icon-btn" aria-label="Toggle dark mode" title="Toggle Light/Dark Theme">
+      <span class="material-symbols-outlined" id="theme-toggle-icon">dark_mode</span>
+    </button>
+  </header>
+
+  <!-- Main Center Auth Area -->
+  <main class="auth-center-stage">
+    <div class="auth-box">
+
+      <!-- Active Session State (Shown if user is already signed in) -->
+      <div id="auth-session-panel" class="auth-session-box" hidden>
+        <div class="auth-session-avatar">
+          <span class="material-symbols-outlined">account_circle</span>
+        </div>
+        <div style="font-size: 0.8125rem; color: var(--color-text-muted);">Currently signed in as:</div>
+        <div id="auth-session-email-label" class="auth-session-email">user@example.com</div>
+        <div class="auth-session-actions">
+          <button type="button" id="auth-session-signout-btn" class="btn btn--secondary">Sign Out</button>
+          <a href="index.html" class="btn btn--primary" style="text-decoration: none;">Open Notes &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Main Clean Authentication Card -->
+      <div id="auth-main-card">
+        <div class="auth-card-panel">
+          <div class="auth-card-header">
+            <h2 class="auth-card-title" id="auth-title">Sign in to AsmetNotes</h2>
+            <p class="auth-card-desc" id="auth-subtitle">Enter your details to access and sync your notes.</p>
+          </div>
+
+          <!-- Alert Notification Banner -->
+          <div id="auth-alert-box" class="auth-notice auth-notice--danger" hidden>
+            <span class="material-symbols-outlined text-xs" id="auth-alert-icon">error</span>
+            <span id="auth-alert-msg"></span>
+          </div>
+
+          <!-- Simple Clean Form -->
+          <form id="auth-form" class="auth-form-body" novalidate>
+            <!-- Full Name (Only on Sign Up) -->
+            <div class="auth-field" id="field-fullname" hidden>
+              <label class="auth-label" for="auth-input-name">Full Name</label>
+              <div class="auth-input-container">
+                <input type="text" id="auth-input-name" class="auth-text-input" placeholder="Alex Morgan" autocomplete="name" />
+              </div>
+            </div>
+
+            <!-- Email Address -->
+            <div class="auth-field">
+              <label class="auth-label" for="auth-input-email">Email Address</label>
+              <div class="auth-input-container">
+                <input type="email" id="auth-input-email" class="auth-text-input" placeholder="name@example.com" required autocomplete="email" />
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="auth-field" id="field-password">
+              <div class="auth-field-row">
+                <label class="auth-label" for="auth-input-password">Password</label>
+                <a href="#forgot" id="auth-link-forgot" class="auth-link">Forgot password?</a>
+              </div>
+              <div class="auth-input-container">
+                <input type="password" id="auth-input-password" class="auth-text-input" placeholder="Enter your password" required autocomplete="current-password" />
+                <button type="button" id="auth-pw-toggle-btn" class="auth-pw-toggle" aria-label="Toggle password visibility">
+                  <span class="material-symbols-outlined text-xs" id="auth-pw-toggle-icon">visibility</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Primary Submit Button -->
+            <button type="submit" id="auth-submit-btn" class="btn btn--primary auth-submit-btn">
+              <span id="auth-submit-text">Sign In</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Mode Toggle at bottom -->
+        <div class="auth-toggle-area">
+          <span id="auth-toggle-prompt">Don't have an account?</span>
+          <button type="button" id="auth-toggle-btn" class="auth-toggle-btn">Sign up</button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script type="module" src="js/auth.js"></script>
+</body>
+</html>

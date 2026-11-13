@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "secondary": "#855300", "tertiary-fixed-dim": "#ffb3ad", "inverse-on-surface": "#eaf1ff", "tertiary": "#960014", "error": "#ba1a1a", "on-error-container": "#93000a", "on-primary-fixed-variant": "#3323cc", "on-error": "#ffffff", "secondary-container": "#fea619", "inverse-primary": "#c3c0ff", "surface-tint": "#4d44e3", "tertiary-fixed": "#ffdad7", "background": "#f8f9ff", "secondary-fixed-dim": "#ffb95f", "on-secondary-fixed-variant": "#653e00", "surface-container": "#e5eeff", "surface-bright": "#f8f9ff", "on-tertiary": "#ffffff", "error-container": "#ffdad6", "on-background": "#0b1c30", "surface-container-high": "#dce9ff", "on-secondary-fixed": "#2a1700", "on-tertiary-fixed-variant": "#930013", "on-primary-fixed": "#0f0069", "secondary-fixed": "#ffddb8", "outline": "#777587", "on-tertiary-container": "#ffd0cc", "surface": "#f8f9ff", "primary-container": "#4f46e5", "on-surface-variant": "#464555", "primary-fixed-dim": "#c3c0ff", "primary": "#3525cd", "on-tertiary-fixed": "#410004", "surface-container-lowest": "#ffffff", "inverse-surface": "#213145", "tertiary-container": "#bc1d25", "on-secondary": "#ffffff", "surface-variant": "#d3e4fe", "on-primary-container": "#dad7ff", "surface-container-highest": "#d3e4fe", "on-surface": "#0b1c30", "outline-variant": "#c7c4d8", "on-secondary-container": "#684000", "surface-dim": "#cbdbf5", "on-primary": "#ffffff", "primary-fixed": "#e2dfff", "surface-container-low": "#eff4ff" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-md": "1rem", "space-xl": "2.5rem", "space-sm": "0.5rem", "space-lg": "1.5rem", "gutter-lg": "1.5rem", "gutter": "1.25rem", "gutter-sm": "0.75rem", "space-xs": "0.25rem", "margin": "2rem", "margin-mobile": "1rem" }, fontFamily: { "label-md": ["Inter"], "body-lg": ["Inter"], "body-md": ["Inter"], "headline-lg": ["Inter"], "body-sm": ["Inter"], "headline-xl": ["Inter"], "headline-xl-mobile": ["Inter"], "headline-md": ["Inter"], "headline-sm": ["Inter"], "label-sm": ["Inter"] }, fontSize: { "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500" }], "body-lg": ["16px", { "lineHeight": "26px", "letterSpacing": "-0.01em", "fontWeight": "400" }], "body-md": ["14px", { "lineHeight": "22px", "letterSpacing": "-0.005em", "fontWeight": "400" }], "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "body-sm": ["12px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" }], "headline-xl": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.025em", "fontWeight": "700" }], "headline-xl-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-sm": ["11px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" }] } } } }</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.03)] pt-safe"><div class="h-14 px-margin-mobile flex items-center justify-between gap-space-xs"><div class="flex items-center gap-space-sm min-w-0"><div class="w-9 h-9 rounded-xl bg-primary-container flex items-center justify-center flex-shrink-0 text-on-primary shadow-[0_2px_6px_rgba(79,70,229,0.25)]"><span class="material-symbols-outlined text-[20px]">edit_note</span></div><div class="flex flex-col min-w-0"><span class="font-headline-sm text-headline-sm text-on-surface truncate tracking-tight">Simple Notes</span><span class="font-label-sm text-label-sm text-on-surface-variant truncate -mt-0.5">All Notes</span></div></div><div class="flex items-center gap-space-xs flex-shrink-0"><button aria-label="Search notes" class="w-11 h-11 rounded-xl flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high/60 transition-colors"><span class="material-symbols-outlined text-[22px]">search</span></button><button aria-label="More options" class="w-11 h-11 rounded-xl flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high/60 transition-colors"><span class="material-symbols-outlined text-[22px]">more_vert</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center ml-space-xs flex-shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-14 pb-space-xl bg-surface min-h-screen"><div class="flex flex-col w-full relative">
+<!-- Interactive Search Bar Drawer (Collapsible) -->
+<div class="hidden px-margin-mobile pt-space-xs pb-space-sm bg-surface" id="search-drawer">
+<div class="flex items-center w-full h-11 px-space-md bg-surface-container-lowest rounded-xl shadow-sm">
+<span class="material-symbols-outlined text-[20px] text-outline mr-space-sm">search</span>
+<input class="w-full bg-transparent text-on-surface font-body-md text-body-md placeholder:text-outline focus:outline-none" placeholder="Search across thoughts, tags, or words..." type="text"/>
+<button class="w-8 h-8 rounded-full flex items-center justify-center text-outline hover:text-on-surface active:scale-95 transition-transform" id="close-search-btn">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+</div>
+<!-- Horizontal Scrollable Category Filter Chips Row -->
+<section class="w-full pt-space-xs pb-space-sm overflow-x-auto no-scrollbar">
+<div class="flex items-center gap-space-xs px-margin-mobile min-w-max">
+<button class="filter-chip active flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary-container text-on-primary shadow-sm active:scale-95 transition-all">
+<span class="font-label-md text-label-md">All</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-container-lowest/25 font-label-sm text-label-sm">8</span>
+</button>
+<button class="filter-chip flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-on-surface active:scale-95 transition-all">
+<span class="font-label-md text-label-md">Work</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">2</span>
+</button>
+<button class="filter-chip flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-on-surface active:scale-95 transition-all">
+<span class="font-label-md text-label-md">Personal</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">2</span>
+</button>
+<button class="filter-chip flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-on-surface active:scale-95 transition-all">
+<span class="font-label-md text-label-md">Ideas</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">2</span>
+</button>
+<button class="filter-chip flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-on-surface active:scale-95 transition-all">
+<span class="font-label-md text-label-md">Reading</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">1</span>
+</button>
+<button class="filter-chip flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-on-surface active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span class="font-label-md text-label-md">New List</span>
+</button>
+</div>
+</section>
+<!-- Main Feed Container -->
+<div class="flex flex-col gap-space-lg px-margin-mobile pt-space-xs pb-24 w-full">
+<!-- Pinned Notes Section -->
+<section class="flex flex-col gap-space-sm w-full">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary-fixed text-secondary">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">push_pin</span>
+<span class="font-label-sm text-label-sm">Pinned</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant">2 notes</span>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface p-1 rounded-lg">
+<span class="material-symbols-outlined text-[18px]">swap_vert</span>
+</button>
+</div>
+<!-- Pinned Card 1 -->
+<article class="group relative w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm transition-all duration-200 active:scale-[0.99] flex flex-col justify-between">
+<div>
+<div class="flex items-start justify-between gap-space-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold tracking-tight">Q4 Product Strategy &amp; Roadmap</h3>
+<button aria-label="Unpin note" class="w-8 h-8 -mr-1 -mt-1 flex items-center justify-center rounded-lg text-secondary-container hover:bg-surface-container-low active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">push_pin</span>
+</button>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mt-space-xs">
+            Finalize sprint deliverables for the spatial UX upgrade. Review team velocity metrics, prioritize real-time collaborative syncing, and wrap keynote draft.
+          </p>
+</div>
+<div class="flex items-center justify-between mt-space-md pt-space-xs">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded-md bg-surface-container text-on-surface-variant font-label-sm text-label-sm">#Work</span>
+<span class="font-label-sm text-label-sm text-outline">25m ago</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button aria-label="Toggle pin" class="w-8 h-8 rounded-lg flex items-center justify-center text-outline hover:text-primary hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[18px]">push_pin</span>
+</button>
+<button aria-label="Edit note" class="open-sheet-btn w-8 h-8 rounded-lg flex items-center justify-center text-outline hover:text-primary hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button aria-label="Delete note" class="w-8 h-8 rounded-lg flex items-center justify-center text-outline hover:text-error hover:bg-error-container/40 transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Pinned Card 2 -->
+<article class="group relative w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm transition-all duration-200 active:scale-[0.99] flex flex-col justify-between">
+<div>
+<div class="flex items-start justify-between gap-space-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold tracking-tight">Weekly Groceries &amp; Farmers Market</h3>
+<button aria-label="Unpin note" class="w-8 h-8 -mr-1 -mt-1 flex items-center justify-center rounded-lg text-secondary-container hover:bg-surface-container-low active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">push_pin</span>
+</button>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mt-space-xs">
+            Organic sourdough, lavender honey, fresh thyme, oat milk, cold brew concentrate, and seasonal blood oranges before 11 AM stall close.
+          </p>
+</div>
+<div class="flex items-center justify-between mt-space-md pt-space-xs">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded-md bg-surface-container text-on-surface-variant font-label-sm text-label-sm">#Personal</span>
+<span class="font-label-sm text-label-sm text-outline">3h ago</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button aria-label="Toggle pin" class="w-8 h-8 rounded-lg flex items-center justify-center text-outline hover:text-primary hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[18px]">push_pin</span>
+</button>
+<button aria-label="Edit note" class="open-sheet-btn w-8 h-8 rounded-lg flex items-center justify-center text-outline hover:text-primary hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button aria-label="Delete note" class="w-8 h-8 rounded-lg flex items-center justify-center text-outline hover:text-error hover:bg-error-container/40 transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</article>
+</section>
+<!-- All Notes Section -->
+<section class="flex flex-col gap-space-sm w-full">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">All Notes (6)</h2>
+<span class="font-label-sm text-label-sm text-outline">Sorted by newest</span>
+</div>
+<!-- Card 3 -->
+<article class="group relative w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm transition-all duration-200 active:scale-[0.99] flex flex-col justify-between">
+<div>
+<div class="flex items-start justify-between gap-space-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold tracking-tight">Book Highlights: Thinking Fast</h3>
+<button aria-label="Pin note" class="w-8 h-8 -mr-1 -mt-1 flex items-center justify-center rounded-lg text-outline hover:text-secondary-container hover:bg-surface-container-low active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[20px]">push_pin</span>
+</button>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mt-space-xs">
+            System 1 operates automatically and quickly, with little or no effort. System 2 allocates attention to effortful mental operations that require deliberate logic.
+          </p>
+</div>
+<div class="flex items-center justify-between mt-space-md pt-space-xs">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded-md bg-surface-container text-on-surface-variant font-label-sm text-label-sm">#Reading</span>
+<span class="font-label-sm text-label-sm text-outline">Yesterday</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button aria-label="Edit note" class="open-sheet-btn w-8 h-8 rounded-lg flex items-center justify-center text-outline hover:text-primary hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button aria-label="Delete note" class="w-8 h-8 rounded-lg flex items-center justify-center text-outline hover:text-error hover:bg-error-container/40 transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 4: TypeScript 5.4 Features -->
+<article class="group relative w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm transition-all duration-200 active:scale-[0.99] flex flex-col justify-between">
+<div>
+<div class="flex items-start justify-between gap-space-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold tracking-tight">TypeScript 5.4 Features</h3>
+<button aria-label="Pin note" class="w-8 h-8 -mr-1 -mt-1 flex items-center justify-center rounded-lg text-outline hover:text-secondary-container hover:bg-surface-container-low active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[20px]">push_pin</span>
+</button>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mt-space-xs">
+            Preserved narrowing in closures following last assignment. Explore `NoInfer` utility type for controlling parameter inference in generic declarations.
+          </p>
+</div>
+<div class="flex items-center justify-between mt-space-md pt-space-xs">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded-md bg-surface-container text-on-surface-variant font-label-sm text-label-sm">#Ideas</span>
+<span class="font-label-sm text-label-sm text-outline">2 days ago</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button aria-label="Edit note" class="open-sheet-btn w-8 h-8 rounded-lg flex items-center justify-center text-outline hover:text-primary hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button aria-label="Delete note" class="w-8 h-8 rounded-lg flex items-center justify-center text-outline hover:text-error hover:bg-error-container/40 transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 5: Visual Inspiration Card with Image Artifact -->
+<article class="group relative w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm transition-all duration-200 active:scale-[0.99] flex flex-col justify-between">
+<div>
+<div class="flex items-start justify-between gap-space-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold tracking-tight">Studio Layout Architecture</h3>
+<button aria-label="Pin note" class="w-8 h-8 -mr-1 -mt-1 flex items-center justify-center rounded-lg text-outline hover:text-secondary-container hover:bg-surface-container-low active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[20px]">push_pin</span>
+</button>
+</div>
+<div class="w-full h-32 rounded-lg overflow-hidden my-space-xs relative">
+<img class="w-full h-full object-cover" data-alt="Minimalist sunlit architectural design studio with oak drafting table, ceramic mug, soft shadows, warm natural morning light, clean lines, serene slate blue and neutral tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOtuMoaq4n_BOMWEw3G0cz18FiDluQyHpXgJjBWwjogl3uA_AQFrz-uLyFrqOOgrHkoFlxBEyidG3nF2IjzKztR0oma2vUr493mb36yd75Jn6jZa3VFmnG1_sad7I79ltDiEPQXuEXVue858DnF9K-gHBREPe-rNhG-KvmgMiplNYjvS_2PRdRtK149RGERL0f5gr_r5Ug2JXG40Rqgo3xundeHuJ3YQMj1IhNV98"/>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mt-space-xs">
+            Keep acoustic felt panels minimal on north facade; natural light angle supports uninterrupted morning drafting sprints.
+          </p>
+</div>
+<div class="flex items-center justify-between mt-space-md pt-space-xs">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded-md bg-surface-container text-on-surface-variant font-label-sm text-label-sm">#Ideas</span>
+<span class="font-label-sm text-label-sm text-outline">May 12</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button aria-label="Edit note" class="open-sheet-btn w-8 h-8 rounded-lg flex items-center justify-center text-outline hover:text-primary hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button aria-label="Delete note" class="w-8 h-8 rounded-lg flex items-center justify-center text-outline hover:text-error hover:bg-error-container/40 transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 6: Travel Packing Essentials -->
+<article class="group relative w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm transition-all duration-200 active:scale-[0.99] flex flex-col justify-between">
+<div>
+<div class="flex items-start justify-between gap-space-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold tracking-tight">Kyoto Packing List &amp; Rail Passes</h3>
+<button aria-label="Pin note" class="w-8 h-8 -mr-1 -mt-1 flex items-center justify-center rounded-lg text-outline hover:text-secondary-container hover:bg-surface-container-low active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[20px]">push_pin</span>
+</button>
+</div>
+<div class="w-full h-24 rounded-lg bg-cover bg-center my-space-xs" data-location="Kyoto, Japan" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDCh5DaB389aie3-fCXh2yJhCXWzmCcWYbkc8GBjRSdRYNai1PS0L-AAA3j0RxMIHbR3ChjwOBXwBisgPg18jDvDkSwmphkGcS9gcy4gTkElvnnzyCrah_8eoJnzJep_b2OGz5B3heIWoB0zK7YUZAgQsbGAThnjM8-SdZnDDcWxGT8nRZhy3x_CruzNnGmrps8MzdDSkIN6FUdrtKvEXdvWaONbEcuYNnFz_U6DlU');"></div>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mt-space-xs">
+            Pick up physical Kansai IC card at counter 2. Compact 28L pack only; reserve baggage space on the Tokaido-Sanyo Shinkansen.
+          </p>
+</div>
+<div class="flex items-center justify-between mt-space-md pt-space-xs">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded-md bg-surface-container text-on-surface-variant font-label-sm text-label-sm">#Personal</span>
+<span class="font-label-sm text-label-sm text-outline">May 8</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button aria-label="Edit note" class="open-sheet-btn w-8 h-8 rounded-lg flex items-center justify-center text-outline hover:text-primary hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button aria-label="Delete note" class="w-8 h-8 rounded-lg flex items-center justify-center text-outline hover:text-error hover:bg-error-container/40 transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</article>
+</section>
+<!-- Delightful Zen Quote Slate Card -->
+<div class="w-full p-space-md rounded-xl bg-surface-container-low flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">lightbulb</span>
+</div>
+<div class="flex flex-col min-w-0">
+<p class="font-body-sm text-body-sm text-on-surface font-medium italic truncate">"Simplicity is prerequisite for reliability."</p>
+<p class="font-label-sm text-label-sm text-outline">Edsger W. Dijkstra</p>
+</div>
+</div>
+</div>
+<!-- Primary Floating Action Button (FAB) -->
+<aside class="fixed bottom-20 right-6 z-40">
+<button aria-label="Compose new note" class="w-14 h-14 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-lg active:scale-90 hover:scale-105 transition-all duration-200" id="fab-create-btn">
+<span class="material-symbols-outlined text-[28px]">add</span>
+</button>
+</aside>
+<!-- Contextual Overflow Dropdown Menu (Anchored trigger simulation) -->
+<div class="hidden fixed top-16 right-4 z-50 w-48 rounded-xl bg-surface-container-lowest shadow-xl py-1.5 flex-col" id="overflow-dropdown">
+<button class="flex items-center gap-3 px-4 py-2.5 text-left text-on-surface hover:bg-surface-container-low transition-colors font-body-md text-body-md">
+<span class="material-symbols-outlined text-[20px] text-outline">sort</span>
+<span>Sort by date</span>
+</button>
+<button class="flex items-center gap-3 px-4 py-2.5 text-left text-on-surface hover:bg-surface-container-low transition-colors font-body-md text-body-md">
+<span class="material-symbols-outlined text-[20px] text-outline">label</span>
+<span>Sort by tag</span>
+</button>
+<button class="flex items-center gap-3 px-4 py-2.5 text-left text-on-surface hover:bg-surface-container-low transition-colors font-body-md text-body-md">
+<span class="material-symbols-outlined text-[20px] text-outline">select_all</span>
+<span>Select items</span>
+</button>
+<div class="h-[1px] bg-surface-container my-1"></div>
+<button class="flex items-center gap-3 px-4 py-2.5 text-left text-error hover:bg-error-container/20 transition-colors font-body-md text-body-md">
+<span class="material-symbols-outlined text-[20px] text-error">delete_sweep</span>
+<span>Clear all notes</span>
+</button>
+</div>
+<!-- Mobile Bottom Sheet Editor State Preview (Slide-up modal overlay) -->
+<div class="fixed inset-0 z-50 bg-inverse-surface/40 backdrop-blur-sm transition-opacity duration-300 opacity-0 pointer-events-none flex flex-col justify-end" id="bottom-sheet-backdrop">
+<div class="w-full max-w-lg mx-auto bg-surface-container-lowest rounded-t-[28px] shadow-2xl flex flex-col max-h-[777px] transform translate-y-full transition-transform duration-300 ease-out" id="bottom-sheet-content">
+<!-- Top Drag Handle & Tactile Pill -->
+<div class="w-full flex justify-center pt-3 pb-1 cursor-grab active:cursor-grabbing">
+<div class="w-12 h-1.5 rounded-full bg-surface-container-highest"></div>
+</div>
+<!-- Bottom Sheet Navigation Bar -->
+<div class="flex items-center justify-between px-space-md py-space-xs">
+<button class="min-w-[44px] min-h-[44px] flex items-center font-label-md text-label-md text-on-surface-variant hover:text-on-surface active:scale-95 transition-transform" id="sheet-cancel-btn">
+          Cancel
+        </button>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Edit Note</span>
+<button class="min-w-[44px] min-h-[44px] flex items-center justify-end font-label-md text-label-md text-primary font-bold hover:text-primary-container active:scale-95 transition-transform" id="sheet-save-btn">
+          Save
+        </button>
+</div>
+<!-- Quick Category Selector inside Editor -->
+<div class="flex items-center gap-2 px-space-md py-space-xs overflow-x-auto no-scrollbar">
+<span class="font-label-sm text-label-sm text-outline">Category:</span>
+<button class="px-2.5 py-1 rounded-md bg-primary-container text-on-primary font-label-sm text-label-sm">#Work</button>
+<button class="px-2.5 py-1 rounded-md bg-surface-container text-on-surface-variant font-label-sm text-label-sm">#Personal</button>
+<button class="px-2.5 py-1 rounded-md bg-surface-container text-on-surface-variant font-label-sm text-label-sm">#Ideas</button>
+<button class="px-2.5 py-1 rounded-md bg-surface-container text-on-surface-variant font-label-sm text-label-sm">+ Custom</button>
+</div>
+<!-- Sheet Note Inputs -->
+<div class="flex flex-col px-space-md py-space-sm gap-space-sm overflow-y-auto pb-safe">
+<input class="w-full bg-transparent font-headline-md text-headline-md text-on-surface font-semibold placeholder:text-outline focus:outline-none" id="note-title-input" placeholder="Title..." type="text" value="Meeting Notes: Spatial Design Sprint"/>
+<textarea class="w-full bg-transparent font-body-md text-body-md text-on-surface-variant placeholder:text-outline focus:outline-none resize-none leading-relaxed" id="note-body-input" placeholder="Type your thoughts freely..." rows="8">1. Reviewed tactile haptic feedback during bottom-sheet gesture pull.
+2. Verified font pairing against 390x844px iPhone frame limits.
+3. Keep ambient cards warm with pale slate fills rather than cold wireframes.</textarea>
+<!-- Dynamic Character Counter & Formatting Toolbar -->
+<div class="flex items-center justify-between pt-space-xs mt-auto">
+<div class="flex items-center gap-space-xs text-outline">
+<button aria-label="Format bold" class="w-9 h-9 rounded-lg flex items-center justify-center hover:bg-surface-container hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[18px]">format_bold</span>
+</button>
+<button aria-label="Checklist" class="w-9 h-9 rounded-lg flex items-center justify-center hover:bg-surface-container hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[18px]">checklist</span>
+</button>
+<button aria-label="Add image" class="w-9 h-9 rounded-lg flex items-center justify-center hover:bg-surface-container hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[18px]">image</span>
+</button>
+<button aria-label="Add audio voice memo" class="w-9 h-9 rounded-lg flex items-center justify-center hover:bg-surface-container hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[18px]">mic</span>
+</button>
+</div>
+<span class="font-label-sm text-label-sm text-outline" id="char-counter">264 chars</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  (function initSimpleNotesMicroInteractions() {
+    const searchDrawer = document.getElementById('search-drawer');
+    const closeSearchBtn = document.getElementById('close-search-btn');
+    const bottomSheetBackdrop = document.getElementById('bottom-sheet-backdrop');
+    const bottomSheetContent = document.getElementById('bottom-sheet-content');
+    const openSheetButtons = document.querySelectorAll('.open-sheet-btn');
+    const fabCreateBtn = document.getElementById('fab-create-btn');
+    const sheetCancelBtn = document.getElementById('sheet-cancel-btn');
+    const sheetSaveBtn = document.getElementById('sheet-save-btn');
+    const noteBodyInput = document.getElementById('note-body-input');
+    const charCounter = document.getElementById('char-counter');
+    const filterChips = document.querySelectorAll('.filter-chip');
+
+    // Header Search integration (listening to search button in App Shell)
+    const headerSearchBtn = document.querySelector('header button[aria-label="Search notes"]');
+    if (headerSearchBtn) {
+      headerSearchBtn.addEventListener('click', () => {
+        searchDrawer.classList.toggle('hidden');
+        if (!searchDrawer.classList.contains('hidden')) {
+          const input = searchDrawer.querySelector('input');
+          if (input) input.focus();
+        }
+      });
+    }
+
+    if (closeSearchBtn) {
+      closeSearchBtn.addEventListener('click', () => {
+        searchDrawer.classList.add('hidden');
+      });
+    }
+
+    // Header More Options Overflow Menu
+    const headerMoreBtn = document.querySelector('header button[aria-label="More options"]');
+    const overflowDropdown = document.getElementById('overflow-dropdown');
+    if (headerMoreBtn && overflowDropdown) {
+      headerMoreBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        overflowDropdown.classList.toggle('hidden');
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!overflowDropdown.contains(e.target) && !headerMoreBtn.contains(e.target)) {
+          overflowDropdown.classList.add('hidden');
+        }
+      });
+    }
+
+    // Bottom Sheet Open / Close logic
+    function openSheet() {
+      bottomSheetBackdrop.classList.remove('pointer-events-none', 'opacity-0');
+      bottomSheetBackdrop.classList.add('opacity-100');
+      bottomSheetContent.classList.remove('translate-y-full');
+      bottomSheetContent.classList.add('translate-y-0');
+      updateCharCount();
+    }
+
+    function closeSheet() {
+      bottomSheetContent.classList.remove('translate-y-0');
+      bottomSheetContent.classList.add('translate-y-full');
+      bottomSheetBackdrop.classList.remove('opacity-100');
+      bottomSheetBackdrop.classList.add('opacity-0');
+      setTimeout(() => {
+        bottomSheetBackdrop.classList.add('pointer-events-none');
+      }, 300);
+    }
+
+    openSheetButtons.forEach(btn => btn.addEventListener('click', openSheet));
+    if (fabCreateBtn) fabCreateBtn.addEventListener('click', openSheet);
+    if (sheetCancelBtn) sheetCancelBtn.addEventListener('click', closeSheet);
+    if (sheetSaveBtn) sheetSaveBtn.addEventListener('click', closeSheet);
+
+    bottomSheetBackdrop.addEventListener('click', (e) => {
+      if (e.target === bottomSheetBackdrop) {
+        closeSheet();
+      }
+    });
+
+    // Character counter updater
+    function updateCharCount() {
+      if (noteBodyInput && charCounter) {
+        charCounter.textContent = `${noteBodyInput.value.length} chars`;
+      }
+    }
+    if (noteBodyInput) {
+      noteBodyInput.addEventListener('input', updateCharCount);
+    }
+
+    // Category Filter Chips toggle
+    filterChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        filterChips.forEach(c => {
+          c.classList.remove('bg-primary-container', 'text-on-primary');
+          c.classList.add('bg-surface-container-low', 'text-on-surface-variant');
+        });
+        chip.classList.add('bg-primary-container', 'text-on-primary');
+        chip.classList.remove('bg-surface-container-low', 'text-on-surface-variant');
+      });
+    });
+  })();
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/85 backdrop-blur-xl shadow-[0_-2px_12px_rgba(11,28,48,0.04)]" data-active-classes="text-primary font-semibold"><div class="flex items-center justify-around h-16 px-space-sm max-w-md mx-auto relative"><a aria-current="page" class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] py-1 transition-colors text-primary font-semibold" data-path="all-notes" href="#"><span class="material-symbols-outlined text-[22px]">description</span><span class="font-label-sm text-label-sm mt-0.5">Notes</span></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] py-1 text-on-surface-variant transition-colors" data-path="pinned-notes" href="#"><span class="material-symbols-outlined text-[22px]">push_pin</span><span class="font-label-sm text-label-sm mt-0.5">Pinned</span></a><div class="relative flex items-center justify-center min-w-[56px] min-h-[44px]"><a aria-label="New Note" class="w-12 h-12 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-[0_4px_14px_rgba(79,70,229,0.35)] active:scale-95 transition-transform" data-path="create-note" href="#"><span class="material-symbols-outlined text-[26px]">add</span></a></div><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] py-1 text-on-surface-variant transition-colors" data-path="categories" href="#"><span class="material-symbols-outlined text-[22px]">folder</span><span class="font-label-sm text-label-sm mt-0.5">Folders</span></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] py-1 text-on-surface-variant transition-colors" data-path="archive" href="#"><span class="material-symbols-outlined text-[22px]">archive</span><span class="font-label-sm text-label-sm mt-0.5">Archive</span></a></div></nav></body></html>
