@@ -4,9 +4,9 @@
 // ====================================================================
 
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from "./config.js";
 
-export const SUPABASE_URL = "https://gudoctpbbejzytbpldiv.supabase.co";
-export const SUPABASE_ANON_KEY = "sb_publishable_dcrWaIeXOX85bdHvzjvMXA_Z0CONUrK";
+export { SUPABASE_URL, SUPABASE_ANON_KEY };
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
   auth: {
