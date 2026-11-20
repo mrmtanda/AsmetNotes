@@ -30,3 +30,4 @@ export const SUPABASE_URL = CONFIG.supabase.url;
 export const SUPABASE_ANON_KEY = CONFIG.supabase.anonKey;
 
 export default CONFIG;
+
