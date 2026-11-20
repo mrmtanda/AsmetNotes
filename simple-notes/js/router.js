@@ -82,3 +82,4 @@ export function initLinkInterceptors() {
 // Automatically clean URL on load
 cleanCurrentUrl();
 initLinkInterceptors();
+

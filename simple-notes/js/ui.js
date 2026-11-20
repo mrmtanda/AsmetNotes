@@ -236,6 +236,9 @@ function createNoteCard(note) {
     li.classList.add("note-card--pinned");
   }
   li.dataset.id = note.id;
+  li.title = "Click to open and read note";
+  li.setAttribute("role", "button");
+  li.tabIndex = 0;
 
   // Card Header: Title + Tag + Pin
   const header = document.createElement("div");
@@ -338,7 +341,7 @@ export function openEditor(note = null) {
   if (!els.editorDialog) return;
   const isEdit = Boolean(note);
   if (els.editorDialogTitle) {
-    els.editorDialogTitle.textContent = isEdit ? "Edit Note" : "New Note";
+    els.editorDialogTitle.textContent = isEdit ? "View & Edit Note" : "New Note";
   }
   if (els.id) els.id.value = note?.id ?? "";
   if (els.title) els.title.value = note?.title ?? "";
@@ -506,57 +509,80 @@ export function bindEvents() {
   const initialSettings = store.getSettings();
   applyTheme(initialSettings.theme);
 
-  // 1. Note Cards Event Delegation (Edit, Pin, Delete, Copy, Duplicate)
+  // 1. Note Cards Event Delegation (Click anywhere to open & read note)
   if (els.list) {
     els.list.addEventListener("click", async (e) => {
-      const target = e.target.closest("[data-action]");
-      if (!target) return;
-      const action = target.dataset.action;
-      const card = target.closest(".note-card");
+      const card = e.target.closest(".note-card");
       if (!card) return;
       const id = card.dataset.id;
       const note = store.getNote(id);
+      if (!note) return;
 
-      if (action === "edit" && note) {
-        openEditor(note);
-      } else if (action === "pin") {
-        store.togglePin(id);
-      } else if (action === "delete") {
-        if (confirm("Delete this note?")) {
-          store.deleteNote(id);
-          showToast("Note deleted");
-        }
-      } else if (action === "duplicate" && note) {
-        const cloned = store.duplicateNote(id);
-        if (cloned) showToast("Note duplicated!");
-      } else if (action === "copy" && note) {
-        try {
-          const text = `${note.title}\n\n${note.content || ""}`.trim();
-          await navigator.clipboard.writeText(text);
-          showToast("Copied to clipboard!", "content_copy");
-        } catch (_) {
-          // Fallback if clipboard API restricted
-          showToast("Copied to clipboard!");
-        }
-      } else if (action === "share" && note) {
-        const shareText = `${note.title}\n\n${note.content || ""}`.trim();
-        const tagLine = note.tag ? `\n\n[#${note.tag}]` : "";
-        try {
-          if (navigator.share) {
-            await navigator.share({
-              title: note.title,
-              text: shareText + tagLine,
-            });
-            showToast("Note shared!", "share");
-          } else {
-            // Fallback: copy shareable text to clipboard
-            await navigator.clipboard.writeText(shareText + tagLine);
-            showToast("Share text copied!", "share");
+      const actionBtn = e.target.closest("[data-action]");
+      if (actionBtn) {
+        const action = actionBtn.dataset.action;
+        if (action === "edit") {
+          openEditor(note);
+          return;
+        } else if (action === "pin") {
+          store.togglePin(id);
+          return;
+        } else if (action === "delete") {
+          if (confirm("Delete this note?")) {
+            store.deleteNote(id);
+            showToast("Note deleted");
           }
-        } catch (err) {
-          if (err.name !== "AbortError") {
-            showToast("Could not share note", "error");
+          return;
+        } else if (action === "duplicate") {
+          const cloned = store.duplicateNote(id);
+          if (cloned) showToast("Note duplicated!");
+          return;
+        } else if (action === "copy") {
+          try {
+            const text = `${note.title}\n\n${note.content || ""}`.trim();
+            await navigator.clipboard.writeText(text);
+            showToast("Copied to clipboard!", "content_copy");
+          } catch (_) {
+            showToast("Copied to clipboard!");
           }
+          return;
+        } else if (action === "share") {
+          const shareText = `${note.title}\n\n${note.content || ""}`.trim();
+          const tagLine = note.tag ? `\n\n[#${note.tag}]` : "";
+          try {
+            if (navigator.share) {
+              await navigator.share({
+                title: note.title,
+                text: shareText + tagLine,
+              });
+              showToast("Note shared!", "share");
+            } else {
+              // Fallback: copy shareable text to clipboard
+              await navigator.clipboard.writeText(shareText + tagLine);
+              showToast("Share text copied!", "share");
+            }
+          } catch (err) {
+            if (err.name !== "AbortError") {
+              showToast("Could not share note", "error");
+            }
+          }
+          return;
+        }
+      }
+
+      // Default: Clicking on the note card, title, or body opens it to read and edit
+      openEditor(note);
+    });
+
+    // Support keyboard Enter or Space to open note when focused
+    els.list.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        const card = e.target.closest(".note-card");
+        if (card && !e.target.closest("button")) {
+          e.preventDefault();
+          const id = card.dataset.id;
+          const note = store.getNote(id);
+          if (note) openEditor(note);
         }
       }
     });
