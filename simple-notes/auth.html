@@ -3,20 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sign In &bull; AsmetNotes</title>
-  <!-- Google Fonts: Inter & Material Symbols Outlined (Matching Project Design) -->
+  <title>Account &bull; AsmetNotes</title>
+  <!-- Google Fonts: Inter & Material Symbols Outlined -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
   <style>
-    /* Clean, Expert Auth Layout using Project Design Tokens */
     body.auth-view {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      background-color: var(--color-bg);
+      background: var(--color-bg);
       color: var(--color-text-body);
       font-family: var(--font-family);
     }
@@ -51,52 +50,63 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 2rem 1rem;
+      padding: 2.5rem 1rem;
     }
 
     .auth-box {
       width: 100%;
-      max-width: 400px;
+      max-width: 390px;
     }
 
     .auth-card-panel {
       background-color: var(--color-surface);
       border: 1px solid var(--color-border);
       border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-lg);
-      padding: 2.25rem 2rem;
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+      padding: 2rem;
     }
 
-    .auth-card-header {
-      margin-bottom: 1.75rem;
-      text-align: left;
+    /* Modern Segmented Control at the top of the card */
+    .auth-tabs-segmented {
+      display: flex;
+      background-color: var(--color-bg);
+      padding: 3px;
+      border-radius: 10px;
+      border: 1px solid var(--color-border);
+      margin-bottom: 1.5rem;
     }
 
-    .auth-card-title {
-      font-size: 1.45rem;
-      font-weight: 700;
-      color: var(--color-text-heading);
-      letter-spacing: -0.02em;
-      margin-bottom: 0.35rem;
-    }
-
-    .auth-card-desc {
+    .auth-tab-btn {
+      flex: 1;
+      padding: 0.6rem 0.75rem;
       font-size: 0.875rem;
+      font-weight: 600;
       color: var(--color-text-muted);
-      line-height: 1.4;
+      background: transparent;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-align: center;
+    }
+
+    .auth-tab-btn.active {
+      background-color: var(--color-surface);
+      color: var(--color-primary);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     }
 
     /* Form Fields */
     .auth-form-body {
       display: flex;
       flex-direction: column;
-      gap: 1.25rem;
+      gap: 1.15rem;
     }
 
     .auth-field {
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
+      gap: 0.35rem;
     }
 
     .auth-field-row {
@@ -126,26 +136,28 @@
       position: relative;
       display: flex;
       align-items: center;
+      width: 100%;
     }
 
     .auth-text-input {
-      width: 100%;
-      height: 42px;
-      padding: 0 0.85rem;
-      font-family: inherit;
-      font-size: 0.9375rem;
-      color: var(--color-text-heading);
-      background-color: var(--color-bg);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-sm);
-      outline: none;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      width: 100% !important;
+      height: 42px !important;
+      padding: 0 0.85rem !important;
+      font-family: inherit !important;
+      font-size: 0.9375rem !important;
+      color: var(--color-text-heading) !important;
+      background-color: var(--color-bg) !important;
+      border: 1px solid var(--color-border) !important;
+      border-radius: var(--radius-sm) !important;
+      outline: none !important;
+      box-sizing: border-box !important;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
     }
 
     .auth-text-input:focus {
-      border-color: var(--color-primary);
-      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
-      background-color: var(--color-surface);
+      border-color: var(--color-primary) !important;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15) !important;
+      background-color: var(--color-surface) !important;
     }
 
     .auth-pw-toggle {
@@ -158,6 +170,7 @@
       padding: 0.25rem;
       display: flex;
       align-items: center;
+      justify-content: center;
       transition: color 0.15s ease;
     }
 
@@ -165,39 +178,27 @@
       color: var(--color-text-heading);
     }
 
-    /* Full Width Primary Submit */
+    /* Submit Button */
     .auth-submit-btn {
       width: 100%;
       height: 42px;
-      margin-top: 0.5rem;
+      margin-top: 0.35rem;
       font-weight: 600;
       font-size: 0.9375rem;
       border-radius: var(--radius-sm);
-    }
-
-    /* Switch Mode Bottom Area */
-    .auth-toggle-area {
-      text-align: center;
-      margin-top: 1.5rem;
-      font-size: 0.8125rem;
-      color: var(--color-text-muted);
-    }
-
-    .auth-toggle-btn {
-      background: none;
-      border: none;
-      color: var(--color-primary);
-      font-weight: 600;
-      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
       cursor: pointer;
-      padding: 0 0.2rem;
     }
 
-    .auth-toggle-btn:hover {
-      text-decoration: underline;
+    .auth-submit-btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
     }
 
-    /* Notification Alerts */
+    /* Alert Banner */
     .auth-notice {
       padding: 0.75rem 0.85rem;
       border-radius: var(--radius-sm);
@@ -221,7 +222,7 @@
       color: var(--color-success);
     }
 
-    /* Active Session Card (if already logged in) */
+    /* Active Session Panel */
     .auth-session-box {
       background-color: var(--color-surface);
       border: 1px solid var(--color-border);
@@ -263,7 +264,7 @@
 </head>
 <body class="auth-view">
 
-  <!-- Top App Navigation -->
+  <!-- Minimalist Top Navigation -->
   <header class="auth-top-nav">
     <a href="index.html" class="auth-nav-link" title="Return to AsmetNotes">
       <span class="material-symbols-outlined text-xs">arrow_back</span>
@@ -301,9 +302,11 @@
       <!-- Main Clean Authentication Card -->
       <div id="auth-main-card">
         <div class="auth-card-panel">
-          <div class="auth-card-header">
-            <h2 class="auth-card-title" id="auth-title">Sign in to AsmetNotes</h2>
-            <p class="auth-card-desc" id="auth-subtitle">Enter your details to access and sync your notes.</p>
+          
+          <!-- Modern Segmented Pill Control -->
+          <div class="auth-tabs-segmented" id="auth-tabs">
+            <button type="button" class="auth-tab-btn active" id="tab-signin" data-tab="signin">Sign In</button>
+            <button type="button" class="auth-tab-btn" id="tab-signup" data-tab="signup">Create Account</button>
           </div>
 
           <!-- Alert Notification Banner -->
@@ -312,7 +315,7 @@
             <span id="auth-alert-msg"></span>
           </div>
 
-          <!-- Simple Clean Form -->
+          <!-- Clean Form -->
           <form id="auth-form" class="auth-form-body" novalidate>
             <!-- Full Name (Only on Sign Up) -->
             <div class="auth-field" id="field-fullname" hidden>
@@ -349,12 +352,6 @@
               <span id="auth-submit-text">Sign In</span>
             </button>
           </form>
-        </div>
-
-        <!-- Mode Toggle at bottom -->
-        <div class="auth-toggle-area">
-          <span id="auth-toggle-prompt">Don't have an account?</span>
-          <button type="button" id="auth-toggle-btn" class="auth-toggle-btn">Sign up</button>
         </div>
       </div>
 

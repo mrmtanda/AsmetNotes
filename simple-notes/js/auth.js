@@ -1,6 +1,5 @@
 // ====================================================================
 // Authentication Controller for AsmetNotes
-// Uses the exact project theme, design tokens, and Supabase client
 // ====================================================================
 
 import * as authClient from "./supabaseClient.js";
@@ -12,8 +11,8 @@ const els = {
   authSessionPanel: document.getElementById("auth-session-panel"),
   authSessionEmailLabel: document.getElementById("auth-session-email-label"),
   authSessionSignoutBtn: document.getElementById("auth-session-signout-btn"),
-  authTitle: document.getElementById("auth-title"),
-  authSubtitle: document.getElementById("auth-subtitle"),
+  tabSignIn: document.getElementById("tab-signin"),
+  tabSignUp: document.getElementById("tab-signup"),
   authAlertBox: document.getElementById("auth-alert-box"),
   authAlertIcon: document.getElementById("auth-alert-icon"),
   authAlertMsg: document.getElementById("auth-alert-msg"),
@@ -28,14 +27,12 @@ const els = {
   authLinkForgot: document.getElementById("auth-link-forgot"),
   authSubmitBtn: document.getElementById("auth-submit-btn"),
   authSubmitText: document.getElementById("auth-submit-text"),
-  authTogglePrompt: document.getElementById("auth-toggle-prompt"),
-  authToggleBtn: document.getElementById("auth-toggle-btn"),
 };
 
 let currentMode = "signin"; // "signin" | "signup" | "forgot"
 
 // --------------------------------------------------------------------
-// 1. Theme Synchronization (Matches main app & settings)
+// 1. Theme Synchronization
 // --------------------------------------------------------------------
 function initTheme() {
   const SETTINGS_KEY = "asmet-notes:settings";
@@ -88,7 +85,8 @@ function showAlert(msg, isSuccess = false) {
 }
 
 function clearAlert() {
-  if (els.authAlertBox) els.authAlertBox.hidden = true;
+  if (!els.authAlertBox) return;
+  els.authAlertBox.hidden = true;
 }
 
 function setBtnLoading(isLoading) {
@@ -115,31 +113,25 @@ function setMode(mode) {
 
   if (mode === "signup") {
     document.title = "Create Account • AsmetNotes";
-    els.authTitle.textContent = "Create an account";
-    els.authSubtitle.textContent = "Sign up to start organizing and syncing your notes.";
-    els.fieldFullName.hidden = false;
-    els.fieldPassword.hidden = false;
-    els.authSubmitText.textContent = "Create Account";
-    els.authTogglePrompt.textContent = "Already have an account?";
-    els.authToggleBtn.textContent = "Sign in";
+    els.tabSignIn?.classList.remove("active");
+    els.tabSignUp?.classList.add("active");
+    if (els.fieldFullName) els.fieldFullName.hidden = false;
+    if (els.fieldPassword) els.fieldPassword.hidden = false;
+    if (els.authSubmitText) els.authSubmitText.textContent = "Create Account";
   } else if (mode === "forgot") {
     document.title = "Reset Password • AsmetNotes";
-    els.authTitle.textContent = "Reset password";
-    els.authSubtitle.textContent = "Enter your registered email to receive recovery instructions.";
-    els.fieldFullName.hidden = true;
-    els.fieldPassword.hidden = true;
-    els.authSubmitText.textContent = "Send Reset Link";
-    els.authTogglePrompt.textContent = "Remembered your password?";
-    els.authToggleBtn.textContent = "Sign in";
+    els.tabSignIn?.classList.remove("active");
+    els.tabSignUp?.classList.remove("active");
+    if (els.fieldFullName) els.fieldFullName.hidden = true;
+    if (els.fieldPassword) els.fieldPassword.hidden = true;
+    if (els.authSubmitText) els.authSubmitText.textContent = "Send Reset Link";
   } else {
     document.title = "Sign In • AsmetNotes";
-    els.authTitle.textContent = "Sign in to AsmetNotes";
-    els.authSubtitle.textContent = "Enter your details to access and sync your notes.";
-    els.fieldFullName.hidden = true;
-    els.fieldPassword.hidden = false;
-    els.authSubmitText.textContent = "Sign In";
-    els.authTogglePrompt.textContent = "Don't have an account?";
-    els.authToggleBtn.textContent = "Sign up";
+    els.tabSignIn?.classList.add("active");
+    els.tabSignUp?.classList.remove("active");
+    if (els.fieldFullName) els.fieldFullName.hidden = true;
+    if (els.fieldPassword) els.fieldPassword.hidden = false;
+    if (els.authSubmitText) els.authSubmitText.textContent = "Sign In";
   }
 }
 
@@ -153,14 +145,9 @@ function bindEvents() {
     input?.addEventListener("focus", clearAlert);
   });
 
-  // Switch between Sign in and Sign up
-  els.authToggleBtn?.addEventListener("click", () => {
-    if (currentMode === "signin") {
-      setMode("signup");
-    } else {
-      setMode("signin");
-    }
-  });
+  // Tab buttons
+  els.tabSignIn?.addEventListener("click", () => setMode("signin"));
+  els.tabSignUp?.addEventListener("click", () => setMode("signup"));
 
   // Forgot password trigger
   els.authLinkForgot?.addEventListener("click", (e) => {
@@ -207,7 +194,7 @@ function bindEvents() {
       try {
         setBtnLoading(true);
         await authClient.resetPassword(email);
-        showAlert("Password reset link sent! Please check your email inbox.", true);
+        showAlert("Password reset link sent! Check your inbox.", true);
         setBtnLoading(false);
       } catch (err) {
         showAlert(err.message || "Failed to send reset link.");
@@ -237,7 +224,7 @@ function bindEvents() {
           await authClient.signIn({ email, password });
         } catch (_) {}
 
-        showAlert("Account created! Opening your workspace...", true);
+        showAlert("Account created! Redirecting...", true);
         setTimeout(() => {
           window.location.href = "index.html";
         }, 350);
@@ -252,7 +239,7 @@ function bindEvents() {
     try {
       setBtnLoading(true);
       await authClient.signIn({ email, password });
-      showAlert("Signed in! Opening your workspace...", true);
+      showAlert("Signed in! Redirecting...", true);
       setTimeout(() => {
         window.location.href = "index.html";
       }, 350);
