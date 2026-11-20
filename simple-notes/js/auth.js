@@ -1,5 +1,5 @@
 // ====================================================================
-// Authentication Controller for AsmetNotes
+// Authentication Controller for AsmetNotes (Sign In Only)
 // ====================================================================
 
 import * as authClient from "./supabaseClient.js";
@@ -11,25 +11,17 @@ const els = {
   authSessionPanel: document.getElementById("auth-session-panel"),
   authSessionEmailLabel: document.getElementById("auth-session-email-label"),
   authSessionSignoutBtn: document.getElementById("auth-session-signout-btn"),
-  tabSignIn: document.getElementById("tab-signin"),
-  tabSignUp: document.getElementById("tab-signup"),
   authAlertBox: document.getElementById("auth-alert-box"),
   authAlertIcon: document.getElementById("auth-alert-icon"),
   authAlertMsg: document.getElementById("auth-alert-msg"),
   authForm: document.getElementById("auth-form"),
-  fieldFullName: document.getElementById("field-fullname"),
-  authInputName: document.getElementById("auth-input-name"),
   authInputEmail: document.getElementById("auth-input-email"),
-  fieldPassword: document.getElementById("field-password"),
   authInputPassword: document.getElementById("auth-input-password"),
   authPwToggleBtn: document.getElementById("auth-pw-toggle-btn"),
   authPwToggleIcon: document.getElementById("auth-pw-toggle-icon"),
-  authLinkForgot: document.getElementById("auth-link-forgot"),
   authSubmitBtn: document.getElementById("auth-submit-btn"),
   authSubmitText: document.getElementById("auth-submit-text"),
 };
-
-let currentMode = "signin"; // "signin" | "signup" | "forgot"
 
 // --------------------------------------------------------------------
 // 1. Theme Synchronization
@@ -92,67 +84,19 @@ function clearAlert() {
 function setBtnLoading(isLoading) {
   if (!els.authSubmitBtn) return;
   els.authSubmitBtn.disabled = isLoading;
-  if (isLoading) {
-    els.authSubmitText.textContent = "Please wait...";
-  } else {
-    els.authSubmitText.textContent =
-      currentMode === "signup"
-        ? "Create Account"
-        : currentMode === "forgot"
-        ? "Send Reset Link"
-        : "Sign In";
+  if (els.authSubmitText) {
+    els.authSubmitText.textContent = isLoading ? "Signing in..." : "Sign In";
   }
 }
 
 // --------------------------------------------------------------------
-// 3. Mode Switcher (Sign In vs Sign Up vs Forgot)
-// --------------------------------------------------------------------
-function setMode(mode) {
-  currentMode = mode;
-  clearAlert();
-
-  if (mode === "signup") {
-    document.title = "Create Account • AsmetNotes";
-    els.tabSignIn?.classList.remove("active");
-    els.tabSignUp?.classList.add("active");
-    if (els.fieldFullName) els.fieldFullName.hidden = false;
-    if (els.fieldPassword) els.fieldPassword.hidden = false;
-    if (els.authSubmitText) els.authSubmitText.textContent = "Create Account";
-  } else if (mode === "forgot") {
-    document.title = "Reset Password • AsmetNotes";
-    els.tabSignIn?.classList.remove("active");
-    els.tabSignUp?.classList.remove("active");
-    if (els.fieldFullName) els.fieldFullName.hidden = true;
-    if (els.fieldPassword) els.fieldPassword.hidden = true;
-    if (els.authSubmitText) els.authSubmitText.textContent = "Send Reset Link";
-  } else {
-    document.title = "Sign In • AsmetNotes";
-    els.tabSignIn?.classList.add("active");
-    els.tabSignUp?.classList.remove("active");
-    if (els.fieldFullName) els.fieldFullName.hidden = true;
-    if (els.fieldPassword) els.fieldPassword.hidden = false;
-    if (els.authSubmitText) els.authSubmitText.textContent = "Sign In";
-  }
-}
-
-// --------------------------------------------------------------------
-// 4. Form Handlers & Event Listeners
+// 3. Form Handlers & Event Listeners
 // --------------------------------------------------------------------
 function bindEvents() {
-  // Clear any alerts on typing
-  [els.authInputName, els.authInputEmail, els.authInputPassword].forEach((input) => {
+  // Clear alerts on input
+  [els.authInputEmail, els.authInputPassword].forEach((input) => {
     input?.addEventListener("input", clearAlert);
     input?.addEventListener("focus", clearAlert);
-  });
-
-  // Tab buttons
-  els.tabSignIn?.addEventListener("click", () => setMode("signin"));
-  els.tabSignUp?.addEventListener("click", () => setMode("signup"));
-
-  // Forgot password trigger
-  els.authLinkForgot?.addEventListener("click", (e) => {
-    e.preventDefault();
-    setMode("forgot");
   });
 
   // Password visibility toggle
@@ -170,36 +114,21 @@ function bindEvents() {
       await authClient.signOut();
       if (els.authSessionPanel) els.authSessionPanel.hidden = true;
       if (els.authMainCard) els.authMainCard.hidden = false;
-      setMode("signin");
       showAlert("Signed out successfully.", true);
     } catch (_) {}
   });
 
-  // Form Submission
+  // Form Submission (Sign In with Email & Password Only)
   els.authForm?.addEventListener("submit", async (e) => {
     e.preventDefault();
     clearAlert();
 
     const email = (els.authInputEmail?.value || "").trim();
     const password = els.authInputPassword?.value || "";
-    const fullName = (els.authInputName?.value || "").trim();
 
     if (!email) {
       showAlert("Please enter your email address.");
       els.authInputEmail?.focus();
-      return;
-    }
-
-    if (currentMode === "forgot") {
-      try {
-        setBtnLoading(true);
-        await authClient.resetPassword(email);
-        showAlert("Password reset link sent! Check your inbox.", true);
-        setBtnLoading(false);
-      } catch (err) {
-        showAlert(err.message || "Failed to send reset link.");
-        setBtnLoading(false);
-      }
       return;
     }
 
@@ -209,33 +138,6 @@ function bindEvents() {
       return;
     }
 
-    if (currentMode === "signup") {
-      if (password.length < 6) {
-        showAlert("Password must be at least 6 characters.");
-        els.authInputPassword?.focus();
-        return;
-      }
-
-      try {
-        setBtnLoading(true);
-        await authClient.signUp({ email, password, fullName });
-        // Automatically sign in
-        try {
-          await authClient.signIn({ email, password });
-        } catch (_) {}
-
-        showAlert("Account created! Redirecting...", true);
-        setTimeout(() => {
-          window.location.href = "index.html";
-        }, 350);
-      } catch (err) {
-        showAlert(err.message || "Could not create account.");
-        setBtnLoading(false);
-      }
-      return;
-    }
-
-    // Sign In Mode
     try {
       setBtnLoading(true);
       await authClient.signIn({ email, password });
@@ -251,13 +153,9 @@ function bindEvents() {
 }
 
 // --------------------------------------------------------------------
-// 5. Initial Session Check
+// 4. Initial Session Check
 // --------------------------------------------------------------------
 async function checkActiveSession() {
-  const params = new URLSearchParams(window.location.search);
-  const mode = params.get("mode");
-  setMode(mode === "signup" ? "signup" : mode === "forgot" ? "forgot" : "signin");
-
   try {
     const session = await authClient.getSession();
     if (session?.user && els.authSessionPanel && els.authSessionEmailLabel) {
