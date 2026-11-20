@@ -40,10 +40,6 @@
       <div class="brand">
         <h1 class="brand-title"><span class="brand-asmet">Asmet</span><span class="brand-notes">Notes</span></h1>
       </div>
-      <div id="workspace-badge" class="workspace-badge" title="Active Workspace">
-        <span class="material-symbols-outlined text-xs">folder_shared</span>
-        <span id="workspace-badge-name">Asmet Workspace</span>
-      </div>
     </div>
 
     <div class="header-center">
@@ -131,18 +127,6 @@
 
     <!-- Sidebar Navigation -->
     <aside id="app-sidebar" class="app-sidebar">
-      <div class="sidebar-section workspace-card">
-        <div class="workspace-info">
-          <div class="workspace-avatar">
-            <span class="material-symbols-outlined">workspaces</span>
-          </div>
-          <div class="workspace-details">
-            <div id="sidebar-workspace-title" class="workspace-title">Asmet Workspace</div>
-            <div class="workspace-subtitle">Local Browser Storage</div>
-          </div>
-        </div>
-      </div>
-
       <!-- Navigation Views -->
       <nav class="sidebar-nav" aria-label="Notes views">
         <button type="button" class="sidebar-nav-item active" data-filter="all">
@@ -242,21 +226,9 @@
     </main>
   </div>
 
-  <!-- Real-Time Local Storage Bottom Bar -->
+  <!-- Real-Time Bottom Bar -->
   <footer id="bottom-bar" class="bottom-bar">
-    <div class="bottom-left">
-      <div id="storage-details-trigger" class="storage-indicator" title="Click to view storage details" role="button" tabindex="0">
-        <span class="material-symbols-outlined text-sm">database</span>
-        <span class="storage-label">Local Storage:</span>
-        <div class="storage-meter">
-          <div id="storage-progress-bar" class="storage-meter-fill" style="width: 1%;"></div>
-        </div>
-        <span class="storage-metrics">
-          <strong id="storage-used-text">0.0 KB</strong> / <span id="storage-quota-text">5.0 MB</span>
-          (<span id="storage-percent-text">0.0%</span>)
-        </span>
-      </div>
-    </div>
+    <div class="bottom-left"></div>
 
     <div class="bottom-center">
       <div class="notes-summary">
