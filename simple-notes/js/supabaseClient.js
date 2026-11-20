@@ -59,10 +59,11 @@ export async function signInAnonymously() {
  * Sign in via OAuth provider (google, github, etc.)
  */
 export async function signInWithOAuth(provider) {
+  const targetPath = window.location.pathname.replace(/\/auth(\.html)?$/, "") || "/";
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
     options: {
-      redirectTo: window.location.origin + window.location.pathname.replace("auth.html", "index.html"),
+      redirectTo: window.location.origin + targetPath,
     },
   });
   if (error) throw error;

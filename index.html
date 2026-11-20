@@ -9,16 +9,16 @@
       try {
         var tokenKey = "sb-gudoctpbbejzytbpldiv-auth-token";
         var raw = localStorage.getItem(tokenKey);
-        var target = "simple-notes/auth.html";
+        var target = "simple-notes/auth";
         if (raw) {
           var parsed = JSON.parse(raw);
           if (parsed && parsed.access_token) {
-            target = "simple-notes/index.html";
+            target = "simple-notes/";
           }
         }
         window.location.replace(target + window.location.search + window.location.hash);
       } catch (e) {
-        window.location.replace("simple-notes/auth.html");
+        window.location.replace("simple-notes/auth");
       }
     })();
   </script>

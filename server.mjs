@@ -20,15 +20,49 @@ const MIME_TYPES = {
 };
 
 const server = http.createServer((req, res) => {
-  let reqPath = req.url.split('?')[0];
-  if (reqPath === '/' || reqPath === '') reqPath = '/index.html';
+  const parsedUrl = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
+  let pathname = parsedUrl.pathname;
 
-  // Prevent path traversal
-  const safePath = path.normalize(reqPath).replace(/^(\.\.[\/\\])+/, '');
-  const filePath = path.join(STATIC_DIR, safePath);
+  // 1. Redirect requests with .html extension to clean URL
+  if (pathname.endsWith('.html')) {
+    let cleanPath = pathname.slice(0, -5);
+    if (cleanPath.endsWith('/index') || cleanPath === '/index') {
+      cleanPath = cleanPath.slice(0, -5) || '/';
+    }
+    const redirectTarget = cleanPath + (parsedUrl.search || '') + (parsedUrl.hash || '');
+    res.writeHead(301, {
+      'Location': redirectTarget || '/',
+      'Cache-Control': 'no-cache',
+    });
+    res.end();
+    return;
+  }
 
+  // 2. Resolve clean paths
+  let filePath;
+  if (pathname === '/' || pathname === '') {
+    filePath = path.join(STATIC_DIR, 'index.html');
+  } else if (pathname === '/auth' || pathname === '/auth/') {
+    filePath = path.join(STATIC_DIR, 'auth.html');
+  } else if (pathname === '/notes' || pathname === '/dashboard') {
+    filePath = path.join(STATIC_DIR, 'index.html');
+  } else {
+    const safePath = path.normalize(pathname).replace(/^(\.\.[\/\\])+/, '');
+    filePath = path.join(STATIC_DIR, safePath);
+
+    // If directory, look for index.html
+    if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
+      filePath = path.join(filePath, 'index.html');
+    }
+    // If exact file doesn't exist, try appending .html
+    else if (!fs.existsSync(filePath) && fs.existsSync(filePath + '.html')) {
+      filePath = filePath + '.html';
+    }
+  }
+
+  // 3. Fallback / 404
   if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
-    res.writeHead(404, { 'Content-Type': 'text/plain' });
+    res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
     res.end('404 Not Found');
     return;
   }
@@ -50,9 +84,9 @@ const DEFAULT_PORT = 3000;
 function start(port) {
   server.listen(port, '127.0.0.1', () => {
     console.log(`\n======================================================`);
-    console.log(` AsmetNotes preview server is running!`);
-    console.log(` Main App: http://localhost:${port}/`);
-    console.log(` Auth Hub: http://localhost:${port}/auth.html`);
+    console.log(` AsmetNotes clean-routing server is running!`);
+    console.log(` Main Dashboard: http://localhost:${port}/`);
+    console.log(` Authentication: http://localhost:${port}/auth`);
     console.log(`======================================================\n`);
   });
 
@@ -67,4 +101,3 @@ function start(port) {
 }
 
 start(DEFAULT_PORT);
-

@@ -1,6 +1,7 @@
 import * as store from "./notesStore.js";
 import * as storage from "./storage.js";
 import { formatDate } from "./utils.js";
+import { navigateToAuth } from "./router.js";
 
 let selectedEditorTag = "Personal";
 let selectedEditorColor = "indigo";
@@ -819,7 +820,7 @@ export function bindEvents() {
         const { signOut } = await import("./supabaseClient.js");
         await signOut();
       } catch (_) {}
-      window.location.href = "auth.html";
+      navigateToAuth();
     }
   };
 

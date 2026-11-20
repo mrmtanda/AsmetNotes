@@ -1,6 +1,7 @@
 import * as storage from "./storage.js";
 import { generateId } from "./utils.js";
 import { supabase, getSession, signOut } from "./supabaseClient.js";
+import { navigateToAuth } from "./router.js";
 
 let notes = [];
 let settings = storage.loadSettings();
@@ -54,8 +55,8 @@ export async function init() {
   try {
     const session = await getSession();
     if (!session?.user) {
-      // User is not signed in, redirect to auth.html
-      window.location.href = "auth.html";
+      // User is not signed in, redirect to auth cleanly
+      navigateToAuth();
       return false;
     }
 

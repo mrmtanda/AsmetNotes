@@ -11,15 +11,15 @@
         var tokenKey = "sb-gudoctpbbejzytbpldiv-auth-token";
         var raw = localStorage.getItem(tokenKey);
         if (!raw) {
-          window.location.replace("auth.html" + window.location.search + window.location.hash);
+          window.location.replace("auth" + window.location.search + window.location.hash);
           return;
         }
         var parsed = JSON.parse(raw);
         if (!parsed || !parsed.access_token) {
-          window.location.replace("auth.html" + window.location.search + window.location.hash);
+          window.location.replace("auth" + window.location.search + window.location.hash);
         }
       } catch (e) {
-        window.location.replace("auth.html" + window.location.search + window.location.hash);
+        window.location.replace("auth" + window.location.search + window.location.hash);
       }
     })();
   </script>
@@ -79,7 +79,7 @@
       </button>
 
       <!-- Cloud Auth Button / Account Trigger -->
-      <a href="auth.html" id="auth-btn" class="btn btn--secondary auth-nav-btn" title="Sign In or Cloud Sync">
+      <a href="auth" id="auth-btn" class="btn btn--secondary auth-nav-btn" title="Sign In or Cloud Sync">
         <span class="material-symbols-outlined text-xs">account_circle</span>
         <span id="auth-btn-label">Sign In</span>
       </a>

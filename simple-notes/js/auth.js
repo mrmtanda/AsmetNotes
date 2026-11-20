@@ -3,6 +3,7 @@
 // ====================================================================
 
 import * as authClient from "./supabaseClient.js";
+import { navigateToDashboard, cleanCurrentUrl } from "./router.js";
 
 const els = {
   themeToggleBtn: document.getElementById("theme-toggle-btn"),
@@ -218,7 +219,7 @@ function bindEvents() {
 
         showAlert("Account created! Redirecting to your notes...", true);
         setTimeout(() => {
-          window.location.replace("index.html");
+          navigateToDashboard();
         }, 350);
       } catch (err) {
         showAlert(err.message || "Could not sign up.");
@@ -233,7 +234,7 @@ function bindEvents() {
       await authClient.signIn({ email, password });
       showAlert("Signed in! Redirecting to your notes...", true);
       setTimeout(() => {
-        window.location.replace("index.html");
+        navigateToDashboard();
       }, 350);
     } catch (err) {
       showAlert(err.message || "Invalid email or password.");
@@ -258,7 +259,7 @@ async function initSessionAndParams() {
   try {
     const session = await authClient.getSession();
     if (session?.user) {
-      window.location.replace("index.html");
+      navigateToDashboard();
     }
   } catch (_) {}
 }
