@@ -4,6 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>AsmetNotes</title>
+  <!-- Immediate Auth Gate: Redirect unauthenticated users before DOM renders -->
+  <script>
+    (function () {
+      try {
+        var tokenKey = "sb-gudoctpbbejzytbpldiv-auth-token";
+        var raw = localStorage.getItem(tokenKey);
+        if (!raw) {
+          window.location.replace("auth.html" + window.location.search + window.location.hash);
+          return;
+        }
+        var parsed = JSON.parse(raw);
+        if (!parsed || !parsed.access_token) {
+          window.location.replace("auth.html" + window.location.search + window.location.hash);
+        }
+      } catch (e) {
+        window.location.replace("auth.html" + window.location.search + window.location.hash);
+      }
+    })();
+  </script>
   <!-- Google Fonts: Inter & Material Symbols Outlined -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

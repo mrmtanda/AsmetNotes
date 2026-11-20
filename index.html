@@ -2,14 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="0; url=simple-notes/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AsmetNotes</title>
   <script>
-    window.location.replace("simple-notes/" + window.location.search + window.location.hash);
+    (function () {
+      try {
+        var tokenKey = "sb-gudoctpbbejzytbpldiv-auth-token";
+        var raw = localStorage.getItem(tokenKey);
+        var target = "simple-notes/auth.html";
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          if (parsed && parsed.access_token) {
+            target = "simple-notes/index.html";
+          }
+        }
+        window.location.replace(target + window.location.search + window.location.hash);
+      } catch (e) {
+        window.location.replace("simple-notes/auth.html");
+      }
+    })();
   </script>
 </head>
-<body style="font-family: system-ui, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; background: #0f172a; color: #f8fafc;">
-  <p>Loading AsmetNotes... If not redirected automatically, <a href="simple-notes/" style="color: #818cf8;">click here</a>.</p>
+<body style="font-family: 'Inter', system-ui, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; background: #090d16; color: #f8fafc;">
+  <p style="font-size: 0.9375rem; color: #94a3b8;">Redirecting to AsmetNotes...</p>
 </body>
 </html>
-

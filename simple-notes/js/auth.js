@@ -1,5 +1,5 @@
 // ====================================================================
-// Authentication Controller for AsmetNotes (Sign In & Sign Up)
+// Modern Authentication Controller for AsmetNotes
 // ====================================================================
 
 import * as authClient from "./supabaseClient.js";
@@ -7,12 +7,10 @@ import * as authClient from "./supabaseClient.js";
 const els = {
   themeToggleBtn: document.getElementById("theme-toggle-btn"),
   themeToggleIcon: document.getElementById("theme-toggle-icon"),
-  authMainCard: document.getElementById("auth-main-card"),
-  authSessionPanel: document.getElementById("auth-session-panel"),
-  authSessionEmailLabel: document.getElementById("auth-session-email-label"),
-  authSessionSignoutBtn: document.getElementById("auth-session-signout-btn"),
   tabSignIn: document.getElementById("tab-signin"),
   tabSignUp: document.getElementById("tab-signup"),
+  authTitle: document.getElementById("auth-title"),
+  authSubtitle: document.getElementById("auth-subtitle"),
   authAlertBox: document.getElementById("auth-alert-box"),
   authAlertIcon: document.getElementById("auth-alert-icon"),
   authAlertMsg: document.getElementById("auth-alert-msg"),
@@ -25,6 +23,7 @@ const els = {
   authPwToggleBtn: document.getElementById("auth-pw-toggle-btn"),
   authPwToggleIcon: document.getElementById("auth-pw-toggle-icon"),
   authSubmitBtn: document.getElementById("auth-submit-btn"),
+  authSubmitSpinner: document.getElementById("auth-submit-spinner"),
   authSubmitText: document.getElementById("auth-submit-text"),
   authFooterPrompt: document.getElementById("auth-footer-prompt"),
   authFooterBtn: document.getElementById("auth-footer-btn"),
@@ -93,6 +92,9 @@ function clearAlert() {
 function setBtnLoading(isLoading) {
   if (!els.authSubmitBtn) return;
   els.authSubmitBtn.disabled = isLoading;
+  if (els.authSubmitSpinner) {
+    els.authSubmitSpinner.hidden = !isLoading;
+  }
   if (els.authSubmitText) {
     if (isLoading) {
       els.authSubmitText.textContent = currentMode === "signup" ? "Signing up..." : "Signing in...";
@@ -116,6 +118,9 @@ function setMode(mode) {
     els.tabSignUp?.classList.add("active");
     els.tabSignUp?.setAttribute("aria-selected", "true");
 
+    if (els.authTitle) els.authTitle.textContent = "Create an account";
+    if (els.authSubtitle) els.authSubtitle.textContent = "Start capturing your ideas with secure cloud sync";
+
     if (els.fieldFullName) els.fieldFullName.hidden = false;
     if (els.authInputPassword) {
       els.authInputPassword.placeholder = "At least 6 characters";
@@ -130,6 +135,9 @@ function setMode(mode) {
     els.tabSignIn?.setAttribute("aria-selected", "true");
     els.tabSignUp?.classList.remove("active");
     els.tabSignUp?.setAttribute("aria-selected", "false");
+
+    if (els.authTitle) els.authTitle.textContent = "Sign In";
+    if (els.authSubtitle) els.authSubtitle.textContent = "Enter your email and password to access your notes";
 
     if (els.fieldFullName) els.fieldFullName.hidden = true;
     if (els.authInputPassword) {
@@ -170,16 +178,6 @@ function bindEvents() {
     }
   });
 
-  // Sign out from active session panel
-  els.authSessionSignoutBtn?.addEventListener("click", async () => {
-    try {
-      await authClient.signOut();
-      if (els.authSessionPanel) els.authSessionPanel.hidden = true;
-      if (els.authMainCard) els.authMainCard.hidden = false;
-      showAlert("Signed out successfully.", true);
-    } catch (_) {}
-  });
-
   // Form Submission
   els.authForm?.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -218,9 +216,9 @@ function bindEvents() {
           await authClient.signIn({ email, password });
         } catch (_) {}
 
-        showAlert("Signed up successfully! Redirecting...", true);
+        showAlert("Account created! Redirecting to your notes...", true);
         setTimeout(() => {
-          window.location.href = "index.html";
+          window.location.replace("index.html");
         }, 350);
       } catch (err) {
         showAlert(err.message || "Could not sign up.");
@@ -233,9 +231,9 @@ function bindEvents() {
     try {
       setBtnLoading(true);
       await authClient.signIn({ email, password });
-      showAlert("Signed in! Redirecting...", true);
+      showAlert("Signed in! Redirecting to your notes...", true);
       setTimeout(() => {
-        window.location.href = "index.html";
+        window.location.replace("index.html");
       }, 350);
     } catch (err) {
       showAlert(err.message || "Invalid email or password.");
@@ -256,12 +254,11 @@ async function initSessionAndParams() {
     setMode("signin");
   }
 
+  // Double check if already logged in: redirect straight to dashboard
   try {
     const session = await authClient.getSession();
-    if (session?.user && els.authSessionPanel && els.authSessionEmailLabel) {
-      els.authSessionEmailLabel.textContent = session.user.email || "Active User";
-      els.authSessionPanel.hidden = false;
-      if (els.authMainCard) els.authMainCard.hidden = true;
+    if (session?.user) {
+      window.location.replace("index.html");
     }
   } catch (_) {}
 }
